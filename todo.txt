@@ -1,0 +1,3 @@
+need to make it run by itself
+
+add quotes, big array that increments everytime it's run

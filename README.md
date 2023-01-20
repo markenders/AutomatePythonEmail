@@ -1,0 +1,1 @@
+Daily email list with inspirational quotes created with python.
