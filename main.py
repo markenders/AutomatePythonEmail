@@ -23,25 +23,63 @@ credentials = {
     "client_x509_cert_url": os.getenv('client_x509_cert_url')
 }
 
+# open account with creds
 sa = gspread.service_account_from_dict(credentials)
+
+# open unsubscribe sheet
+unsub = sa.open("UnsubscribeQOTD")
+unsubWorksheet = unsub.worksheet("UnsubResponse")
+
+# open subscribe sheet
 sh = sa.open("DailyEmailPythonResponses")
 wks = sh.worksheet("Sheet1")
 
-print('Emails to be sent: ', wks.row_count-1)
 
-# last row to go to
-maxrow = wks.row_count
-# first row to start on
-row = 2
-# tracks emails sent
-sentEmails = 0
+# list of emails to be deleted
+u_list = unsubWorksheet.col_values(2)
+if (len(u_list) != 1):
+    print("Emails to be deleted: " + str(u_list))
 
-while row <= maxrow:
-    send_email(
-        Name=wks.acell('B'+str(row)).value,
-        email_receiver=wks.acell('C'+str(row)).value
-    )
-    row += 1
-    sentEmails += 1
+    while (1 < len(u_list)):
+        # if 2 == row_count last row that cannot be deleted so null values swapped in.
+        if (len(u_list) == 2):
+            try:
+                email = wks.find(u_list[1])
+                wks.delete_rows(email.row)
+            except:
+                print("Couldn't find email in subscriber sheet")
+            unsubWorksheet.clear()
+            unsubWorksheet.update('A1', 'Timestamp')
+            unsubWorksheet.update('B1', 'Email_Unsub')
 
-print('Total emails sent: ' + str(sentEmails))
+            # this should break the loop length == 1
+            u_list.remove(u_list[1])
+        else:
+            try:
+                email = wks.find(u_list[1])
+                wks.delete_rows(email.row)
+            except:
+                print("couldn't find email")
+            unsubWorksheet.delete_rows(2)
+            u_list.remove(u_list[1])
+    print("Results of unsubscribe (Email_Unsub is supposed to be there): " + str(u_list))
+
+
+# print('Emails to be sent: ', wks.row_count-1)
+
+# # last row to go to
+# maxrow = wks.row_count
+# # first row to start on
+# row = 2
+# # tracks emails sent
+# sentEmails = 0
+
+# while row <= maxrow:
+#     send_email(
+#         Name=wks.acell('B'+str(row)).value,
+#         email_receiver=wks.acell('C'+str(row)).value
+#     )
+#     row += 1
+#     sentEmails += 1
+
+# print('Total emails sent: ' + str(sentEmails))
