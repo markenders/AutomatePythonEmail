@@ -86,8 +86,10 @@ def send_email(Name, email_receiver):
     em['To'] = email_receiver
 
     # gives somebody a default name randomly
-    defaultName = ["Camel", "Big head", "Pizza", "Face", "Monkey", "Buns", "Dummy", "Nooblet", "Panda", "Sloppynuts", "Hollow head", "Smooshie",
-                   "Duckie", "Minion", "Cheeky", "Captain America", "Gandalf", "Flippers", "Butters", "Doofus", "Bambi", "Cinnamon", "Silly", "Billy", "Tarzan", "Kitty", "Cat", "Pipsqueak"]
+    defaultName = ["King", "Monkey", "Buns", "Queen", "Nooblet", "Panda", "Smooshie", "Duckie", "Luigi", "Cheeky",
+                   "Captain America", "Gandalf", "Flippers", "Butters", "Doofus", "Bambi", "Cinnamon", "Silly", "Billy", "Tarzan", "Kitty", "Pipsqueak",
+                   "Mario", "Pikachu", "Sonic the Hedgehog", "Link", "Master Chief", "Donkey Kong", "Crash Bandicoot", "Zelda"]
+
     if (Name == None):
         Name = defaultName[random.randint(0, len(defaultName)-1)]
 

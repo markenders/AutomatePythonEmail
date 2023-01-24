@@ -1,6 +1,21 @@
-Daily email list with created with python that sends out inspirational quotes, quotes from songs/movies, or just some good quotes (hopefully).
+###Daily email list created with python
+######Sends out inspirational quotes, quotes from songs/movies, or just some good quotes (hopefully).
 
+###Example email
+![Example email](/assets/Example.PNG)
+
+
+###Subscribe!
+[Click here](https://forms.gle/XzyGEwAe2XEFFj7AA)
+
+
+###Unsubscribe!
+[Click here](https://forms.gle/DywznevhTdKUMDiy9)
+
+
+
+<!-- 
 TODO:
-change actions so that it commits to github to increment quotecounter
 add more quotes
-change quotetcounter to 0
+change quotecounter to 0
+ -->
