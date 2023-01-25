@@ -17,5 +17,4 @@
 <!-- 
 TODO:
 add more quotes
-change quotecounter to 0
  -->
