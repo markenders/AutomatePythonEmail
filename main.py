@@ -64,6 +64,9 @@ if (len(u_list) != 1):
             u_list.remove(u_list[1])
     print("Results of unsubscribe (Email_Unsub is supposed to be there): " + str(u_list))
 
+# trying to reopen sheet to refresh wasn't updating after unsubscribe fast enough
+sh = sa.open("DailyEmailPythonResponses")
+wks = sh.worksheet("Sheet1")
 
 print('Emails to be sent: ', wks.row_count-1)
 
