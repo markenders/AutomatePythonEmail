@@ -68,21 +68,25 @@ if (len(u_list) != 1):
 sh = sa.open("DailyEmailPythonResponses")
 wks = sh.worksheet("Sheet1")
 
-print('Emails to be sent: ', wks.row_count-1)
 
 # last row to go to
 maxrow = wks.row_count
-# first row to start on
-row = 2
 # tracks emails sent
 sentEmails = 0
+# get email data in list of lists
+emailData = wks.get('B2:C'+str(maxrow))
 
-while row <= maxrow:
+
+print('Emails to be sent: ', str(len(emailData)))
+
+emailIndex = 0
+
+while emailIndex < len(emailData):
     send_email(
-        Name=wks.acell('B'+str(row)).value,
-        email_receiver=wks.acell('C'+str(row)).value
+        Name=emailData[emailIndex][0],
+        email_receiver=emailData[emailIndex][1]
     )
-    row += 1
+    emailIndex += 1
     sentEmails += 1
 
 print('Total emails sent: ' + str(sentEmails))

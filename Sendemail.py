@@ -46,7 +46,7 @@ def send_email(Name, email_receiver):
                    "Doofus", "Bambi", "Cinnamon", "Silly", "Billy", "Tarzan", "Kitty", "Pipsqueak",
                    "Mario", "Pikachu", "Sonic the Hedgehog", "Link", "Master Chief", "Donkey Kong", "Crash Bandicoot", "Zelda"]
 
-    if (Name == None):
+    if (Name == None or Name == ''):
         Name = defaultName[random.randint(0, len(defaultName)-1)]
 
     # Set the subject and body of the email
