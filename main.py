@@ -73,6 +73,7 @@ if (len(u_list) > 1):
     unsubWorksheet.clear()
     unsubWorksheet.update('A1', 'Timestamp')
     unsubWorksheet.update('B1', 'Email_Unsub')
+    print('Subscriber sheet updated and Unsubscriber sheet cleared')
 
 
 # trying to reopen sheet to refresh wasn't updating after unsubscribe fast enough
