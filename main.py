@@ -37,32 +37,43 @@ wks = sh.worksheet("Sheet1")
 
 # list of emails to be deleted
 u_list = unsubWorksheet.col_values(2)
-if (len(u_list) != 1):
-    print("Emails to be deleted: " + str(u_list))
 
-    while (1 < len(u_list)):
-        # if 2 == row_count last row that cannot be deleted so null values swapped in.
-        if (len(u_list) == 2):
-            try:
-                email = wks.find(u_list[1])
-                wks.delete_rows(email.row)
-            except:
-                print("Couldn't find email in subscriber sheet")
-            unsubWorksheet.clear()
-            unsubWorksheet.update('A1', 'Timestamp')
-            unsubWorksheet.update('B1', 'Email_Unsub')
+UnsubRow = 1
 
-            # this should break the loop length == 1
-            u_list.remove(u_list[1])
-        else:
-            try:
-                email = wks.find(u_list[1])
-                wks.delete_rows(email.row)
-            except:
-                print("couldn't find email")
-            unsubWorksheet.delete_rows(2)
-            u_list.remove(u_list[1])
-    print("Results of unsubscribe (Email_Unsub is supposed to be there): " + str(u_list))
+while (UnsubRow < len(u_list)):
+    # list of cell info and email
+    unsubtest = (wks.findall(u_list[UnsubRow]))
+
+    # convert from cell to str list
+    emailStr = [str(x) for x in unsubtest]
+    test = 0
+
+    while (test < len(emailStr)):
+        end = emailStr[test].find("C", 7)
+        emailStr[test] = str(emailStr[test])[7:end]
+        test += 1
+
+    goo = 0
+    rowToDel = len(emailStr) - 1
+
+    while (goo < len(emailStr)):
+        # Have to go backwards on delete, messes with google sheets otherwise
+        wks.delete_rows(int(emailStr[rowToDel]))
+        rowToDel -= 1
+        goo += 1
+
+    UnsubRow += 1
+
+# reset sheet to two rows
+if (len(u_list) >= 3):
+    unsubWorksheet.delete_rows(3, len(u_list))
+
+# reset/clear sheet
+if (len(u_list) > 1):
+    unsubWorksheet.clear()
+    unsubWorksheet.update('A1', 'Timestamp')
+    unsubWorksheet.update('B1', 'Email_Unsub')
+
 
 # trying to reopen sheet to refresh wasn't updating after unsubscribe fast enough
 sh = sa.open("DailyEmailPythonResponses")
