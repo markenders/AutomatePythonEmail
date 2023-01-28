@@ -38,7 +38,7 @@ dailyIndex = getQuoteIndex()
 
 def send_email(Name, email_receiver):
     em = EmailMessage()
-    em['From'] = formataddr(("Daily QOTD", f"{email_sender}"))
+    em['From'] = formataddr(("QOTD", f"{email_sender}"))
     em['To'] = email_receiver
 
     # gives somebody a default name randomly
