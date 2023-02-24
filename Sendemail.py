@@ -25,7 +25,13 @@ date = today.strftime("%B %d, %Y")
 def getQuoteIndex(filename="quotecounter.txt"):
     with open(filename, "a+") as getIndex:
         getIndex.seek(0)
+
         val = int(getIndex.read() or 0)+1
+
+        # end of loop/quote index reset to 1
+        if (val >= len(quotes)):
+            val = 1
+
         getIndex.seek(0)
         getIndex.truncate()
         getIndex.write(str(val))
