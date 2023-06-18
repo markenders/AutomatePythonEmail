@@ -138,7 +138,7 @@ quotes = [
     "“Mr. Sir: I got a story for your Girl Scouts. Once upon a time there was a magical place where it never rained. The end.”\n[snickers scornfully] —Holes",
     "“Winners focus on winning. Losers focus on winners”",
     "“What you do makes a difference, and you have to decide what kind of difference you want to make.” —Jane Goodall",
-    "“Meredith, I’m worried that the baby thinks people can’t change.” ―Tim Robinson from I Think You Should Leave with Tim Robinson“We cannot solve problems with the kind of thinking we employed when we came up with them.” — Albert Einstein",
+    "“Meredith, I’m worried that the baby thinks people can’t change.” ―Tim Robinson from I Think You Should Leave with Tim Robinson",
     "“I have never let my schooling interfere with my education.” —Mark Twain",
     "“You’re killin’ me, Smalls.” -The Sandlot, 1993",
     "“I am the danger. A guy opens his door and gets shot, and you think that of me? No... I am the one who knocks!” —Walter White from Breaking Bad",
@@ -366,5 +366,6 @@ quotes = [
     "“What counts is not necessarily the size of the dog in the fight - it's the size of the fight in the dog” —Dwight D. Eisenhower",
     "“If you watch how nature deals with adversity, continually renewing itself, you can’t help but learn.” —Bernie S. Siegel",
     "“The man who promises everything is sure to fulfil nothing, and everyone who promises too much is in danger of using evil means in order to carry out his promises.” —Carl Jung",
+    "“We cannot solve problems with the kind of thinking we employed when we came up with them.” — Albert Einstein",
     "“He that climbs the tall tree has won the right to the fruit.” —Walter Scott...........Tomorrow the quotes will reset back <3 thanks for subscribing",
 ]
