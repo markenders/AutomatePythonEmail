@@ -312,8 +312,8 @@ quotes = [
     "“Don't look at your feet to see if you are doing it right. Just dance.” ―Anne Lamott",
     "“If we don’t mark the milestones, we’re just passing with the time.” —Lara Axelrod",
     "“You had me at ‘hello.’” —Jerry Maguire, 1996",
-    "“Achieve more in failure than most do in success”"
-    "“The homework doesn’t guarantee anything; with luck, it gives you a shot at something real.” —Bryan Cranston from A Life in Parts"
+    "“Achieve more in failure than most do in success”",
+    "“The homework doesn’t guarantee anything; with luck, it gives you a shot at something real.” —Bryan Cranston from A Life in Parts",
     "“Dost thou love life? Then do not squander time, for that is the stuff life is made of.” —Benjamin Franklin",
     "“It is not how much we have, but how much we enjoy, that makes happiness.” —Charles Spurgeon",
     "“An ounce of action is worth a ton of theory.” —Friedrich Engels",
