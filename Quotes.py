@@ -216,7 +216,7 @@ quotes = [
     "“Love your family, work super hard, live your passion.” — Gary Vaynerchuk",
     "“Even extraordinary people, and I believe you are, are driven by human banalities” —Tyrell Wellick from Mr. Robot",
     "“Don’t worry about failure; you only have to be right once.” —Drew Houston",
-    "“Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.” —Helen Keller",
+    "“All love that has not friendship for its base, is like a mansion built upon sand.” —Ella Wheeler Wilcox",
     "“Education is the most powerful weapon which you can use to change the world.” — Nelson Mandela",
     "“Talent wins games, but teamwork and intelligence win championships.” — Michael Jordan",
     "“Opportunities don't happen, you create them.” — Chris Grosser",
