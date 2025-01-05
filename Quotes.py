@@ -331,7 +331,7 @@ quotes = [
     "“Nothing will work unless you do.” —Maya Angelou",
     "“All love that has not friendship for its base, is like a mansion built upon sand.” —Ella Wheeler Wilcox",
     "“If we have no peace, it is because we have forgotten that we belong to each other.” —Mother Teresa",
-    "“Life isn't fair, it's just fairer than death, that's all.” —William Goldman",
+    "“Remember, no man is a failure who has friends.” —Clarence from It's a Wonderful Life",
     "“All that we send into the lives of others comes back into our own.” —Edwin Markham",
     "“Life is 10 percent what happens to you and 90 percent how you react to it.” —Charles R. Swindoll",
     "“When your values are clear to you, making decisions becomes easier.” —Roy E. Disney",
