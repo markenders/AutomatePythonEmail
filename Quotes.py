@@ -279,7 +279,7 @@ quotes = [
     "“People's passion and desire for authenticity is strong.” —Constance Wu",
     "“The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.” — Winston Churchill",
     "“Hate. A little bit's okay. As long as you never forget who's boss.” —Don Eladio Vuente from Better Call Saul",
-    "“Don't settle for average. Bring your best to the moment. Then, whether it fails or succeeds, at least you know you gave all you had.” —Angela Bassett",
+    "“Tend to the part of the garden you can touch” —Unknown",
     "“True humility is not thinking less of yourself; it is thinking of yourself less.” — C.S. Lewis",
     "“Don't let perfect be the enemy of good”",
     "“Goal setting is the secret to a compelling future.” — Tony Robbins",
