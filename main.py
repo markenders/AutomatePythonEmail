@@ -1,14 +1,16 @@
-from datetime import date
-from Sendemail import send_email
-from dotenv import load_dotenv
-import gspread
 import os
+import time
+import gspread
+from gspread.exceptions import APIError
+from Sendemail import send_email
+from datetime import date
+from dotenv import load_dotenv
 
-# load env vars
+# Load env vars
 load_dotenv()
 
-# format with .replace
-pkey = os.getenv('private_key').replace('\\n', '\n')
+raw_pkey = os.getenv('private_key')
+pkey = raw_pkey.replace('\\n', '\n') if raw_pkey else ''
 
 credentials = {
     "type": "service_account",
@@ -23,82 +25,70 @@ credentials = {
     "client_x509_cert_url": os.getenv('client_x509_cert_url')
 }
 
-# open account with creds
+def open_sheet_with_retry(sa, title, max_retries=3, delay=5):
+    for attempt in range(max_retries):
+        try:
+            return sa.open(title)
+        except APIError as e:
+            if attempt == max_retries - 1:
+                raise e
+            print(f"Google API unavailable when opening '{title}'. Retrying in {delay}s... (Attempt {attempt + 1}/{max_retries})")
+            time.sleep(delay)
+
+# Initialize client
 sa = gspread.service_account_from_dict(credentials)
 
-# open unsubscribe sheet
-unsub = sa.open("UnsubscribeQOTD")
-unsubWorksheet = unsub.worksheet("UnsubResponse")
+# 1. Fetch unsubscribed emails
+unsub_sheet = open_sheet_with_retry(sa, "UnsubscribeQOTD")
+unsub_wks = unsub_sheet.worksheet("UnsubResponse")
+# Get col 2 values, excluding header if present
+raw_unsub_list = unsub_wks.col_values(2)
+unsub_emails = set(email.strip().lower() for email in raw_unsub_list[1:] if email.strip())
 
-# open subscribe sheet
-sh = sa.open("DailyEmailPythonResponses")
-wks = sh.worksheet("Sheet1")
+# 2. Fetch subscribers
+sub_sheet = open_sheet_with_retry(sa, "DailyEmailPythonResponses")
+sub_wks = sub_sheet.worksheet("Sheet1")
+all_subscribers = sub_wks.get_all_values()
 
+if all_subscribers:
+    header = all_subscribers[0]
+    sub_rows = all_subscribers[1:]
+else:
+    header = ['Name', 'Email']
+    sub_rows = []
 
-# list of emails to be deleted
-u_list = unsubWorksheet.col_values(2)
+# 3. Filter out unsubscribed users in memory
+active_subscribers = []
+for row in sub_rows:
+    if len(row) >= 3:  # Ensure row has at least A, B, and C
+        email = row[2].strip().lower()  # Column C is Email
+        if email and email not in unsub_emails:
+            active_subscribers.append(row)
 
-UnsubRow = 1
+# 4. Update subscriber sheet in bulk if any unsubscribes occurred
+if unsub_emails and len(sub_rows) != len(active_subscribers):
+    sub_wks.clear()
+    sub_wks.update(values=[header] + active_subscribers, range_name='A1')
+    print("Subscriber sheet updated with removals.")
 
-while (UnsubRow < len(u_list)):
-    # list of cell info and email
-    unsubtest = (wks.findall(u_list[UnsubRow]))
+# 5. Clear unsubscribe sheet in one batch call
+if unsub_emails:
+    unsub_wks.clear()
+    unsub_wks.update(values=[['Timestamp', 'Email_Unsub']], range_name='A1')
+    print("Unsubscriber sheet cleared.")
 
-    # convert from cell to str list
-    emailStr = [str(x) for x in unsubtest]
-    test = 0
+# 6. Send emails to active subscribers
+print(f"Emails to be sent: {len(active_subscribers)}")
+sent_count = 0
 
-    while (test < len(emailStr)):
-        end = emailStr[test].find("C", 7)
-        emailStr[test] = str(emailStr[test])[7:end]
-        test += 1
+for row in active_subscribers:
+    name = row[1]      # Column B is Name
+    receiver = row[2]  # Column C is Email
+    
+    try:
+        send_email(Name=name, email_receiver=receiver)
+        sent_count += 1
+    except Exception as e:
+        print(f"Failed to send email to {receiver}: {e}")
 
-    goo = 0
-    rowToDel = len(emailStr) - 1
-
-    while (goo < len(emailStr)):
-        # Have to go backwards on delete, messes with google sheets otherwise
-        wks.delete_rows(int(emailStr[rowToDel]))
-        rowToDel -= 1
-        goo += 1
-
-    UnsubRow += 1
-
-# reset sheet to two rows
-if (len(u_list) >= 3):
-    unsubWorksheet.delete_rows(3, len(u_list))
-
-# reset/clear sheet
-if (len(u_list) > 1):
-    unsubWorksheet.clear()
-    unsubWorksheet.update('A1', 'Timestamp')
-    unsubWorksheet.update('B1', 'Email_Unsub')
-    print('Subscriber sheet updated and Unsubscriber sheet cleared')
-
-
-# trying to reopen sheet to refresh wasn't updating after unsubscribe fast enough
-sh = sa.open("DailyEmailPythonResponses")
-wks = sh.worksheet("Sheet1")
-
-
-# last row to go to
-maxrow = wks.row_count
-# tracks emails sent
-sentEmails = 0
-# get email data in list of lists
-emailData = wks.get('B2:C'+str(maxrow))
-
-
-print('Emails to be sent: ', str(len(emailData)))
-
-emailIndex = 0
-
-while emailIndex < len(emailData):
-    send_email(
-        Name=emailData[emailIndex][0],
-        email_receiver=emailData[emailIndex][1]
-    )
-    emailIndex += 1
-    sentEmails += 1
-
-print('Total emails sent: ' + str(sentEmails))
+print(f"Total emails sent: {sent_count}")
