@@ -11,12 +11,12 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v4
 
-      - name: Set up uv and Python 3.9
+      - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.9"
 
-      - name: install python packages
+      - name: Install dependencies
         run: |
           uv pip install --system --upgrade pip
           uv pip install --system -r requirements.txt
